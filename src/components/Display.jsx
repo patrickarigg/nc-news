@@ -4,13 +4,23 @@ import { fetchAllArticlesSortedByDate } from "../api";
 
 function Display() {
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchAllArticlesSortedByDate().then((foundArticles) => {
-      console.log(foundArticles);
-      setArticles(foundArticles);
-    });
+    setIsLoading(true);
+    fetchAllArticlesSortedByDate()
+      .then((foundArticles) => {
+        console.log(foundArticles);
+        setArticles(foundArticles);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <>
