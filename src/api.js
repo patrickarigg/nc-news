@@ -11,8 +11,20 @@ export async function fetchAllArticlesSortedByDate() {
         sort_by: "created_at",
       },
     });
-    console.log(res);
     return res.data.articles;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function fetchArticleById(article_id) {
+  try {
+    const res = await newsAPI.get(`/articles/${article_id}`, {
+      params: {
+        sort_by: "created_at",
+      },
+    });
+    return res.data.article;
   } catch (err) {
     console.log(err);
   }
