@@ -24,7 +24,10 @@ function Article() {
 
   return (
     <article className="single-article">
-      <img src={currArticle.article_img_url}></img>
+      <img
+        src={currArticle.article_img_url}
+        alt={`Image for article ${currArticle.article_id}`}
+      ></img>
       <h2>{currArticle.title}</h2>
       <p>
         <strong>By {currArticle.author}</strong>
