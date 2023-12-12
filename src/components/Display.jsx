@@ -12,7 +12,6 @@ function Display() {
     setIsLoading(true);
     fetchAllArticlesSortedByDate()
       .then((foundArticles) => {
-        console.log(foundArticles);
         setArticles(foundArticles);
       })
       .finally(() => {
