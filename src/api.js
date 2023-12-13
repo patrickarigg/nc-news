@@ -36,14 +36,10 @@ export async function fetchCommentsForArticle(article_id) {
 }
 
 export async function incrementArticleVote(article_id, inc_votes) {
-  try {
-    const res = await newsAPI.patch(`/articles/${article_id}`, {
-      inc_votes,
-    });
-    return res.data.updatedArticle;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await newsAPI.patch(`/articles/${article_id}`, {
+    inc_votes,
+  });
+  return res.data.updatedArticle;
 }
 
 export async function postNewComment(article_id, username, commentBody) {
