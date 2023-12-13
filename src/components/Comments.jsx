@@ -71,7 +71,13 @@ function Comments({ article_id, comments, setComments }) {
       )}
 
       {comments.map((comment) => {
-        return <CommentCard key={comment.comment_id} comment={comment} />;
+        return (
+          <CommentCard
+            key={comment.comment_id}
+            comment={comment}
+            setComments={setComments}
+          />
+        );
       })}
     </section>
   );

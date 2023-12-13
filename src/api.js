@@ -49,3 +49,8 @@ export async function postNewComment(article_id, username, commentBody) {
   });
   return res.data.comment;
 }
+
+export async function deleteCommentById(comment_id) {
+  const res = await newsAPI.delete(`/comments/${comment_id}`);
+  return res;
+}

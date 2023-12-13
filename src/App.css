@@ -113,6 +113,11 @@ nav ul {
   padding-right: 1rem;
 }
 
+.comment-card p button {
+  margin-left: 1rem;
+  align-self: right;
+}
+
 .comment-date {
   font-size: 0.75rem;
 }
