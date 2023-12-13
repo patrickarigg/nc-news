@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { UserContext } from "../contexts/User";
+import { Link } from "react-router-dom";
+UserContext;
+
 function Header() {
+  const { user } = useContext(UserContext);
   return (
     <header>
       <ul>
@@ -7,9 +13,9 @@ function Header() {
         </li>
         <li>
           <img src="../../user-icon.png" alt="" />
-          <a>
-            <strong>Sign-In</strong>
-          </a>
+          <Link to={user ? `/users/${user}` : "/sign-in"}>
+            <strong>{user ? user : "Sign In"}</strong>
+          </Link>
         </li>
       </ul>
     </header>
