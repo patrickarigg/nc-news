@@ -34,3 +34,10 @@ export async function fetchCommentsForArticle(article_id) {
     console.log(err);
   }
 }
+
+export async function incrementArticleVote(article_id, inc_votes) {
+  const res = await newsAPI.patch(`/articles/${article_id}`, {
+    inc_votes,
+  });
+  return res.data.updatedArticle;
+}

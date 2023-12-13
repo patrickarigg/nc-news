@@ -122,3 +122,17 @@ nav ul {
   flex-direction: column;
   align-items: flex-start;
 }
+
+.vote-button {
+  width: 3rem;
+}
+
+.vote-button-pressed {
+  width: 3rem;
+  background-color: blue;
+}
+
+#vote-error {
+  color: red;
+  font-size: 0.9rem;
+}
