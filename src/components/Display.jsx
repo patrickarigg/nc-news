@@ -27,7 +27,11 @@ function Display() {
     <>
       <Routes>
         <Route path="/" element={<Home articles={articles} />} />
+        <Route path="/sign-in" element={<></>} />
+        <Route path="/articles" element={<></>} />
+        <Route path="/users" element={<></>} />
         <Route path="/articles/:article_id" element={<Article />} />
+        <Route path="users/:user_id" element={<></>} />
       </Routes>
     </>
   );
