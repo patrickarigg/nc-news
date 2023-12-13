@@ -54,3 +54,17 @@ export async function deleteCommentById(comment_id) {
   const res = await newsAPI.delete(`/comments/${comment_id}`);
   return res;
 }
+
+export async function fetchArticlesByTopic(topic) {
+  const res = await newsAPI.get(`/articles`, {
+    params: {
+      topic: topic,
+    },
+  });
+  return res.data.articles;
+}
+
+export async function fetchAllTopics() {
+  const res = await newsAPI.get(`/topics`);
+  return res.data.topics;
+}
