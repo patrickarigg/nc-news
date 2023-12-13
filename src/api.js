@@ -43,13 +43,9 @@ export async function incrementArticleVote(article_id, inc_votes) {
 }
 
 export async function postNewComment(article_id, username, commentBody) {
-  try {
-    const res = await newsAPI.post(`/articles/${article_id}/comments`, {
-      username: username,
-      body: commentBody,
-    });
-    return res.data.comment;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await newsAPI.post(`/articles/${article_id}/comments`, {
+    username: username,
+    body: commentBody,
+  });
+  return res.data.comment;
 }

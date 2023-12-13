@@ -132,7 +132,7 @@ nav ul {
   background-color: blue;
 }
 
-#vote-error {
+.error-message {
   color: red;
   font-size: 0.9rem;
 }

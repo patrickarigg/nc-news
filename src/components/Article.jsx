@@ -92,7 +92,9 @@ function Article() {
       >
         👎
       </button>
-      {voteError ? <p id="vote-error">Error, please try voting again</p> : null}
+      {voteError ? (
+        <p className="error-message">Error, please try voting again</p>
+      ) : null}
       <Comments
         article_id={currArticle.article_id}
         comments={comments}
