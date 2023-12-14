@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
 import { fetchAllTopics, fetchArticlesByQuery } from "../api";
 import { useSearchParams } from "react-router-dom";
+import Error from "./Error";
 function Articles() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -10,6 +11,7 @@ function Articles() {
   const topic = searchParams.get("topic") || undefined;
   const sortBy = searchParams.get("sort_by") || undefined;
   const order = searchParams.get("order") || "desc";
+  const [invalidTopicError, setInvalidTopicError] = useState(false);
 
   function handleTopicChange(event) {
     const newParams = new URLSearchParams(searchParams);
@@ -37,10 +39,15 @@ function Articles() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchAllTopics().then((topics) => {
-      setAllTopics(topics.map((topic) => topic.slug));
-    });
-    fetchArticlesByQuery(searchParams)
+    fetchAllTopics()
+      .then((topics) => {
+        setAllTopics(topics.map((topic) => topic.slug));
+        if (!allTopics.includes(topic)) {
+          setInvalidTopicError(true);
+          return Promise.reject();
+        }
+        return fetchArticlesByQuery(searchParams);
+      })
       .then((foundArticles) => {
         setArticles(foundArticles);
       })
@@ -54,6 +61,9 @@ function Articles() {
 
   if (isLoading) {
     return <h2>Loading...</h2>;
+  }
+  if (invalidTopicError) {
+    return <Error title="404 Topic Not Found" />;
   }
   return (
     <main>
