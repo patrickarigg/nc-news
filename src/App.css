@@ -35,7 +35,9 @@ header li {
 }
 
 header img {
-  max-height: 3rem;
+  max-height: 3.5rem;
+  align-self: center;
+  border-radius: 1rem;
 }
 
 header a {

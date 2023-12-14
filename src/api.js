@@ -66,3 +66,8 @@ export async function fetchAllTopics() {
   const res = await newsAPI.get(`/topics`);
   return res.data.topics;
 }
+
+export async function fetchUserData(username) {
+  const res = await newsAPI.get(`/users/${username}`);
+  return res.data.user;
+}
