@@ -7,18 +7,27 @@ import { Link } from "react-router-dom";
 function Comments({ article_id, comments, setComments }) {
   const [commentInput, setCommentInput] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const [commentError, setCommentError] = useState(false);
+  const [commentPostError, setCommentPostError] = useState(false);
+  const [commentLengthError, setCommentLengthError] = useState(false);
   const { user } = useContext(UserContext);
-
+  const MAXCHAR = 100;
   function updateCommentInput(event) {
     setCommentInput(event.target.value);
+    if (commentInput.length === 0) {
+      setDisabled(true);
+    } else if (commentInput.length > MAXCHAR) {
+      setCommentLengthError(true);
+      setDisabled(true);
+    } else {
+      setCommentLengthError(false);
+      setDisabled(false);
+    }
   }
 
   function handleCommentPost(event) {
     event.preventDefault();
     if (commentInput) {
       setDisabled(true);
-      console.log("POSTING COMMENT");
       postNewComment(article_id, user, commentInput)
         .then((comment) => {
           setComments((currValue) => {
@@ -28,12 +37,12 @@ function Comments({ article_id, comments, setComments }) {
         })
         .catch((err) => {
           console.log(err);
-          setCommentError(true);
+          setCommentPostError(true);
         })
         .finally(() => {
           setDisabled(false);
           setTimeout(() => {
-            setCommentError(false);
+            setCommentPostError(false);
           }, 2000);
         });
     }
@@ -58,7 +67,12 @@ function Comments({ article_id, comments, setComments }) {
           <button disabled={disabled} onClick={handleCommentPost}>
             Post
           </button>
-          {commentError ? (
+          {commentLengthError ? (
+            <p className="error-message">
+              {`comment must be less that ${MAXCHAR} characters.`}
+            </p>
+          ) : null}
+          {commentPostError ? (
             <p className="error-message">
               Error when posting comment, please retry.
             </p>

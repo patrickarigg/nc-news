@@ -6,12 +6,14 @@ import {
   incrementArticleVote,
 } from "../api";
 import Comments from "./Comments";
+import Error from "./Error";
 
 function Article() {
   const { article_id } = useParams();
   const [currArticle, setCurrArticle] = useState({});
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [userArticleVote, setUserArticleVote] = useState(0);
   const [voteError, setVoteError] = useState(false);
 
@@ -51,6 +53,9 @@ function Article() {
       .then((foundComments) => {
         setComments(foundComments);
       })
+      .catch(() => {
+        setIsError(true);
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -58,50 +63,54 @@ function Article() {
 
   if (isLoading) {
     return <h2>Loading...</h2>;
+  } else if (isError) {
+    return <Error title="404 Article Not Found" />;
+  } else {
+    return (
+      <article className="single-article">
+        <div id="article-img-container">
+          <img
+            src={currArticle.article_img_url}
+            alt={`Image for article ${currArticle.article_id}`}
+          ></img>
+        </div>
+        <h2>{currArticle.title}</h2>
+        <p>
+          <strong>By {currArticle.author}</strong>
+        </p>
+        <p>
+          {currArticle.comment_count} comments | {currArticle.votes} votes
+        </p>
+        <p>{currArticle.body}</p>
+        <button
+          id="article-up-vote"
+          className={
+            userArticleVote == 1 ? "vote-button-pressed" : "vote-button"
+          }
+          onClick={handleArticleVote}
+        >
+          👍
+        </button>
+        <button
+          id="article-down-vote"
+          className={
+            userArticleVote == -1 ? "vote-button-pressed" : "vote-button"
+          }
+          onClick={handleArticleVote}
+        >
+          👎
+        </button>
+        {voteError ? (
+          <p className="error-message">Error, please try voting again</p>
+        ) : null}
+        <Comments
+          article_id={currArticle.article_id}
+          comments={comments}
+          setComments={setComments}
+        />
+      </article>
+    );
   }
-
-  return (
-    <article className="single-article">
-      <div id="article-img-container">
-        <img
-          src={currArticle.article_img_url}
-          alt={`Image for article ${currArticle.article_id}`}
-        ></img>
-      </div>
-      <h2>{currArticle.title}</h2>
-      <p>
-        <strong>By {currArticle.author}</strong>
-      </p>
-      <p>
-        {currArticle.comment_count} comments | {currArticle.votes} votes
-      </p>
-      <p>{currArticle.body}</p>
-      <button
-        id="article-up-vote"
-        className={userArticleVote == 1 ? "vote-button-pressed" : "vote-button"}
-        onClick={handleArticleVote}
-      >
-        👍
-      </button>
-      <button
-        id="article-down-vote"
-        className={
-          userArticleVote == -1 ? "vote-button-pressed" : "vote-button"
-        }
-        onClick={handleArticleVote}
-      >
-        👎
-      </button>
-      {voteError ? (
-        <p className="error-message">Error, please try voting again</p>
-      ) : null}
-      <Comments
-        article_id={currArticle.article_id}
-        comments={comments}
-        setComments={setComments}
-      />
-    </article>
-  );
 }
 
 export default Article;

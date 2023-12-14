@@ -18,12 +18,8 @@ export async function fetchAllArticlesSortedByDate() {
 }
 
 export async function fetchArticleById(article_id) {
-  try {
-    const res = await newsAPI.get(`/articles/${article_id}`);
-    return res.data.article;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await newsAPI.get(`/articles/${article_id}`);
+  return res.data.article;
 }
 
 export async function fetchCommentsForArticle(article_id) {
