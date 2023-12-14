@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import ArticleCard from "./ArticleCard";
 import { fetchAllTopics, fetchArticlesByQuery } from "../api";
 import { useSearchParams } from "react-router-dom";
+import ArticleCard from "./ArticleCard";
 import Error from "./Error";
+
 function Articles() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +43,7 @@ function Articles() {
     fetchAllTopics()
       .then((topics) => {
         setAllTopics(topics.map((topic) => topic.slug));
-        if (!allTopics.includes(topic)) {
+        if (topic && !allTopics.includes(topic)) {
           setInvalidTopicError(true);
           return Promise.reject();
         }
