@@ -55,10 +55,12 @@ export async function deleteCommentById(comment_id) {
   return res;
 }
 
-export async function fetchArticlesByTopic(topic) {
+export async function fetchArticlesByQuery(searchParams) {
   const res = await newsAPI.get(`/articles`, {
     params: {
-      topic: topic,
+      topic: searchParams.get("topic"),
+      sort_by: searchParams.get("sort_by"),
+      order: searchParams.get("order"),
     },
   });
   return res.data.articles;

@@ -1,22 +1,38 @@
 import { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
-import { fetchAllTopics, fetchArticlesByTopic } from "../api";
+import { fetchAllTopics, fetchArticlesByQuery } from "../api";
 import { useSearchParams } from "react-router-dom";
 function Articles() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [allTopics, setAllTopics] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const topic = searchParams.get("topic") || "";
+  const topic = searchParams.get("topic") || undefined;
+  const sortBy = searchParams.get("sort_by") || undefined;
+  const order = searchParams.get("order") || "desc";
 
   function handleTopicChange(event) {
     const newParams = new URLSearchParams(searchParams);
-    newParams.set("topic", event.target.value);
     if (event.target.value === "All topics") {
-      setSearchParams(new URLSearchParams());
+      newParams.delete("topic");
+      setSearchParams(newParams);
     } else {
+      newParams.set("topic", event.target.value);
       setSearchParams(newParams);
     }
+  }
+
+  function handleSortByChange(event) {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("sort_by", event.target.value);
+    setSearchParams(newParams);
+  }
+
+  function handleOrderChange(event) {
+    const newParams = new URLSearchParams(searchParams);
+    const newOrder = order == "asc" ? "desc" : "asc";
+    newParams.set("order", newOrder);
+    setSearchParams(newParams);
   }
 
   useEffect(() => {
@@ -24,7 +40,7 @@ function Articles() {
     fetchAllTopics().then((topics) => {
       setAllTopics(topics.map((topic) => topic.slug));
     });
-    fetchArticlesByTopic(topic)
+    fetchArticlesByQuery(searchParams)
       .then((foundArticles) => {
         setArticles(foundArticles);
       })
@@ -34,7 +50,7 @@ function Articles() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [topic]);
+  }, [searchParams]);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -53,6 +69,14 @@ function Articles() {
           );
         })}
       </select>
+      <select name="sort_by" value={sortBy} onChange={handleSortByChange}>
+        <option value={"created_at"}>sort by date</option>
+        <option value={"comment_count"}>sort by comments</option>
+        <option value={"votes"}>sort by votes</option>
+      </select>
+      <button value={order} onClick={handleOrderChange}>
+        {order === "desc" ? "⬇" : "⬆"}
+      </button>
 
       <section className="articles">
         {articles.map((article) => {
