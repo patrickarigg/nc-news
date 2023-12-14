@@ -53,6 +53,7 @@ nav ul {
 }
 
 .articles {
+  margin-top: 1rem;
   overflow: scroll;
   display: flex;
   gap: 1rem;
