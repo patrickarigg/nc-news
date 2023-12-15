@@ -30,7 +30,7 @@ function Header() {
           </Link>
           {user ? (
             <p className="sign-out-text">
-              not {user}?
+              Not {user}?
               <Link onClick={handleSignOut} className="sign-out-text">
                 sign-out
               </Link>
