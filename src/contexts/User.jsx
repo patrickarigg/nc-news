@@ -2,10 +2,16 @@ import { createContext, useEffect, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(sessionStorage.getItem("user") || "");
+  const [user, setUser] = useState(
+    sessionStorage.getItem("user") || "grumpy19"
+  );
 
   useEffect(() => {
-    sessionStorage.setItem("user", "grumpy19");
+    if (user) {
+      sessionStorage.setItem("user", user);
+    } else {
+      sessionStorage.removeItem("user");
+    }
   }, [user]);
 
   return (

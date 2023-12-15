@@ -68,7 +68,7 @@ function Articles() {
   }
   return (
     <main>
-      <h2>All Articles</h2>
+      <h2>Articles</h2>
 
       <select name="topic" value={topic} onChange={handleTopicChange}>
         <option value={undefined}>All topics</option>
@@ -85,7 +85,7 @@ function Articles() {
         <option value={"comment_count"}>sort by comments</option>
         <option value={"votes"}>sort by votes</option>
       </select>
-      <button value={order} onClick={handleOrderChange}>
+      <button id="sort-order-button" value={order} onClick={handleOrderChange}>
         {order === "desc" ? "⬇" : "⬆"}
       </button>
 
