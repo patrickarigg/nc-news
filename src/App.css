@@ -154,10 +154,12 @@ main {
 }
 
 .vote-button {
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 1.5rem;
   border-width: 1px;
+  text-align: center;
+  font-size: large;
 }
 
 .vote-button:hover {
@@ -165,11 +167,13 @@ main {
 }
 
 .vote-button-pressed {
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 1.5rem;
   background-color: rgb(63, 63, 207);
   border-width: 1px;
+  text-align: center;
+  font-size: large;
 }
 
 .vote-button-pressed:hover {
